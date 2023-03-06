@@ -21,7 +21,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   try {
-    const tagData = await Category.findByPk(req.params.id, {
+    const tagData = await Tag.findByPk(req.params.id, {
       include: [{ model: Product }],
     });
     if (!tagData) {
@@ -47,6 +47,15 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
   // update a tag's name by its `id` value
+  Tag.update(req.body, {
+    where: {id: req.params.id
+    }
+  })
+  .then(function(tagData){
+    res.status(200).json(tagData)}
+  ) .catch(err => {
+    res.status(400).json(err)
+  })
 });
 
 router.delete('/:id', async (req, res) => {
